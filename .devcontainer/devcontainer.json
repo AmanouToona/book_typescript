@@ -1,0 +1,16 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+  "name": "typescript learning project",
+  "build": {
+    "dockerfile": "../Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint"]
+    },
+    "settings": {
+      "typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib"
+    }
+  },
+  "remoteUser": "node"
+}

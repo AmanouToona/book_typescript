@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  ts:
+    container_name: ts
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "./src:/workspace"
+    tty: true
+    ports:
+      - "3000:3000"
