@@ -1,0 +1,10 @@
+var list = [1, 2, 3];
+var sayHello = function (name) { return "Hello, ".concat(name, "!!"); }; // 型情報の引数名称は editor に表示する際などに用いられる。 コード中で必要なものではない
+var person = { name: 'Michael Jackson', age: 20 }; // object 型はあるが、制約が弱すぎるので、各キー毎に型を定義する
+var readonly_person = { name: 'Michael Jackson', age: 20 };
+// readonly_person.name = 'Stevie Wonder'  // error する なぜなら readonly で縛っているから。 強力な機能であり、積極的に使っていくべき
+var anyValue = 'Michael Jackson'; // any 型は何を入れることもできる。 最終手段
+anyValue = 123;
+anyValue = undefined;
+anyValue = [1, 2, 3];
+anyValue = function () { console.log('hello'); };
