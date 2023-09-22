@@ -6,7 +6,7 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": ["dbaeumer.vscode-eslint", "mhutchie.git-graph"]
+      "extensions": ["dbaeumer.vscode-eslint", "mhutchie.git-graph", "esbenp.prettier-vscode"]
     },
     "settings": {
       "typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib"
