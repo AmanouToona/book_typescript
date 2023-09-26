@@ -1,48 +1,50 @@
-import { threadId } from "worker_threads";
-
 const printLine = (text: string, breakline: boolean = true) => {
     process.stdout.write(text + (breakline ? '\n' : ''))
 };
 
 const promptInput = async (text: string) => {
     printLine(`\n${text}\n> `, false)
-    const input: string = await new Promise((resolve) => process.stdin.once('data', (data) => resolve(data.toString())))
-    return input.trim()
+    return readline();
 };
 
+const readline = async () => {
+    const input: string = await new Promise((resolve) => process.stdin.once('data', (data) => resolve(data.toString())));
+    return input.trim();
+}
 
-//  こちらでも動作する
-// const promptInput = (text: string) => {
-//     return new Promise((resolve, reject) => {
-//         printLine(`\n${text}\n >`, false);
+const promptSelect = async (text: string, values: readonly string[]): Promise<string> => {
+    printLine(`\n${text}`);
+    values.forEach((value) => {
+        printLine(`- ${value}`);
+    })
+    printLine(`> `, false);
 
-//         process.stdin.once('data', (data) => {
-//             const input = data.toString().trim();
-//             resolve(input);
-//         });
+    const input = await readline();
+    if (values.includes(input)) {
+        return Promise.resolve(input);
+    } else {
+        return promptSelect(text, values);
+    }
+}
 
-//         process.stdin.once('error', (err) => {
-//             reject(err);
-//         });
-//     });
-// };
 
-// promptInput('名前を入力してください').then((input) => console.log(input)).catch((error) => { console.log(`error: ${error}`) })
+type Mode = 'normal' | 'hard';
 
 class HitAndBlow {
     private readonly answerSource: string[];
     private answer: string[];
     private tryCount: number;
-    private mode: 'normal' | 'hard';
+    private mode: Mode = 'normal';
 
-    constructor(mode: 'normal' | 'hard') {
+    constructor() {
         this.answerSource = Array.from({ length: 10 }, (_, index) => String(index));
         this.answer = [];
         this.tryCount = 0;
-        this.mode = mode;
     };
 
-    setting() {
+    async setting() {
+        this.mode = await promptSelect('モードを選択してください', ['normal', 'hard']) as Mode;
+
         const answerLength = this.getAnswerLength();
 
         while (this.answer.length < answerLength) {
@@ -113,8 +115,8 @@ class HitAndBlow {
 };
 
 (async () => {
-    const hitAndBlow = new HitAndBlow('normal');
-    hitAndBlow.setting();
+    const hitAndBlow = new HitAndBlow();
+    await hitAndBlow.setting();
     await hitAndBlow.play();
     hitAndBlow.end();
 })()

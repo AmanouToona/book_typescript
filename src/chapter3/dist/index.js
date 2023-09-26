@@ -8,46 +8,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const printLine = (text, breakline = true) => {
     process.stdout.write(text + (breakline ? '\n' : ''));
 };
 const promptInput = (text) => __awaiter(void 0, void 0, void 0, function* () {
     printLine(`\n${text}\n> `, false);
+    return readline();
+});
+const readline = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield new Promise((resolve) => process.stdin.once('data', (data) => resolve(data.toString())));
     return input.trim();
 });
-//  こちらでも動作する
-// const promptInput = (text: string) => {
-//     return new Promise((resolve, reject) => {
-//         printLine(`\n${text}\n >`, false);
-//         process.stdin.once('data', (data) => {
-//             const input = data.toString().trim();
-//             resolve(input);
-//         });
-//         process.stdin.once('error', (err) => {
-//             reject(err);
-//         });
-//     });
-// };
-// promptInput('名前を入力してください').then((input) => console.log(input)).catch((error) => { console.log(`error: ${error}`) })
+const promptSelect = (text, values) => __awaiter(void 0, void 0, void 0, function* () {
+    printLine(`\n${text}`);
+    values.forEach((value) => {
+        printLine(`- ${value}`);
+    });
+    printLine(`> `, false);
+    const input = yield readline();
+    if (values.includes(input)) {
+        return Promise.resolve(input);
+    }
+    else {
+        return promptSelect(text, values);
+    }
+});
 class HitAndBlow {
-    constructor(mode) {
+    constructor() {
+        this.mode = 'normal';
         this.answerSource = Array.from({ length: 10 }, (_, index) => String(index));
         this.answer = [];
         this.tryCount = 0;
-        this.mode = mode;
     }
     ;
     setting() {
-        const answerLength = this.getAnswerLength();
-        while (this.answer.length < answerLength) {
-            const randNum = Math.floor(Math.random() * answerLength);
-            const selectedItem = this.answerSource[randNum];
-            if (!this.answer.includes(selectedItem)) {
-                this.answer.push(selectedItem);
+        return __awaiter(this, void 0, void 0, function* () {
+            this.mode = (yield promptSelect('モードを選択してください', ['normal', 'hard']));
+            const answerLength = this.getAnswerLength();
+            while (this.answer.length < answerLength) {
+                const randNum = Math.floor(Math.random() * answerLength);
+                const selectedItem = this.answerSource[randNum];
+                if (!this.answer.includes(selectedItem)) {
+                    this.answer.push(selectedItem);
+                }
             }
-        }
+        });
     }
     play() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -106,8 +111,8 @@ class HitAndBlow {
 }
 ;
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    const hitAndBlow = new HitAndBlow('normal');
-    hitAndBlow.setting();
+    const hitAndBlow = new HitAndBlow();
+    yield hitAndBlow.setting();
     yield hitAndBlow.play();
     hitAndBlow.end();
 }))();
