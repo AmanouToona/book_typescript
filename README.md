@@ -21,3 +21,12 @@
 ### tsconfig.json
 
 `outDir`, `rootDir` を記述。コンパイル対象と出力先を設定。
+
+## メモ
+
+`as const` はliteral type widening の抑制  
+``` typescript
+const = person{name: 'name'};
+cosnt = person{name: 'name'} as const;
+```
+は異なる。
