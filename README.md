@@ -15,11 +15,13 @@
 
 ### package.json
 
+`npm init -y` で準備。  
 `scripts` に `build`, `dev`, `start` を記述する。  
 `start` に記述してあると、 ```npm run start``` でコードを実行できる
 
 ### tsconfig.json
 
+`tsc --init` で準備。  
 `outDir`, `rootDir` を記述。コンパイル対象と出力先を設定。
 
 ## メモ
