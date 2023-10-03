@@ -49,7 +49,7 @@ abstract class Game {
 
 class GameProcedure {
     private currentGameTitle: GameTitle | '' = '';
-    private currentGame: HitAndBlow | Janken | null = null;
+    private currentGame: Game | null = null;
 
     constructor(private readonly gameStore: GameStore) { }
 
