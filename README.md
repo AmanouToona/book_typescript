@@ -45,3 +45,9 @@ export NODE_OPTIONS=--openssl-legacy-provider  # openssl の version が合わ�
 ```
 
 [openssl の環境変数設定](https://zenn.dev/yogarasu/articles/425732ff408d06)
+
+### その他設定
+
+1. tsconfig.json の compilerOptions sourceMap を true にする。 webpack がソースマップを読めるようにするため
+2. package.json に build, serve, dev を追加する. 内容はコード参照
+3. その他、 tsconfig の設定は page 156 参照
