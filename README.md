@@ -29,7 +29,7 @@
 
 ```typescript
 const = person{name: 'name'};
-cosnt = person{name: 'name'} as const;
+const = person{name: 'name'} as const;
 ```
 
 は異なる。
