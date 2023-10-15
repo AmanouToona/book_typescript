@@ -1,4 +1,4 @@
-import { Task } from './Task';
+import { Task, Status } from './Task';
 
 export class TaskCollection {
     private tasks: Task[] = [];
@@ -22,4 +22,8 @@ export class TaskCollection {
         })
     }
 
+    filter(filterStatus: Status) {
+        return this.tasks.filter(({ status }) => status === filterStatus);
+
+    }
 }
