@@ -13,8 +13,13 @@ class Application {
     );
 
     start() {
+        const taskItems = this.taskRender.renderAll(this.taskCollection);
         const createForm = document.getElementById('createForm') as HTMLElement;
         const deleteAllDoneTaskButtom = document.getElementById('deleteAllDoneTask') as HTMLElement;
+
+        taskItems.forEach(({ task, deleteButtonEl }) => {
+            this.eventListner.add(task.id, 'click', deleteButtonEl, () => this.handleClickDeleteTask(task))
+        })
 
         this.eventListner.add('submit-handler', 'submit', createForm, this.handleSubmit);
         this.eventListner.add('cklick-handler', 'click', deleteAllDoneTaskButtom, this.handleClickDeleteAllDoneTask);
@@ -72,7 +77,21 @@ class Application {
         task.update({ status: newStatus });
         this.taskCollection.update(task);
 
-        console.log(sibling);
+        console.log('sibling is ', sibling);
+
+        if (sibling) {
+            const nextTaskId = this.taskRender.getId(sibling);
+
+            if (!nextTaskId) return;
+
+            const nextTask = this.taskCollection.find(nextTaskId);
+
+            if (!nextTask) return;
+
+            this.taskCollection.moveAboveTarget(task, nextTask);
+        } else {
+            this.taskCollection.moveToLast(task);
+        }
 
     };
 }

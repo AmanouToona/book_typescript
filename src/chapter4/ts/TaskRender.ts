@@ -1,6 +1,7 @@
 import dragula from 'dragula';
 
 import { Task, Status, statusMap } from './Task';
+import { TaskCollection } from './TaskCollection';
 
 export class TaskRender {
     constructor(
@@ -32,6 +33,29 @@ export class TaskRender {
         return { taskEl, deleteButtonEl };
     }
 
+    renderAll(taskCollection: TaskCollection) {
+        const todoTasks = this.renderLit(taskCollection.filter(statusMap.todo), this.todoList);
+        const doingTasks = this.renderLit(taskCollection.filter(statusMap.doing), this.doingList);
+        const doneTasks = this.renderLit(taskCollection.filter(statusMap.done), this.doneList);
+
+        return [...todoTasks, ...doingTasks, ...doneTasks];
+    }
+
+    private renderLit(tasks: Task[], listEl: HTMLElement) {
+        if (tasks.length === 0) { return [] };
+
+        const taskList: Array<{ task: Task, deleteButtonEl: HTMLButtonElement }> = [];
+
+        tasks.forEach((task) => {
+            const { taskEl, deleteButtonEl } = this.render(task);
+
+            listEl.append(taskEl);
+            taskList.push({ task, deleteButtonEl });
+        });
+
+        return taskList;
+    }
+
     remove(task: Task) {
         const taskEl = document.getElementById(task.id);
         if (!taskEl) return;
@@ -50,9 +74,8 @@ export class TaskRender {
         dragula([this.todoList, this.doingList, this.doneList]).on('drop', (el, target, _source, sibling) => {
             let newStatus: Status = statusMap.todo;
 
-            if (target.id === 'doingList') newStatus = statusMap.doing;
-            if (target.id === 'doneList') newStatus = statusMap.done;
-
+            if (target.id === 'doingList') { newStatus = statusMap.doing; }
+            if (target.id === 'doneList') { newStatus = statusMap.done; }
             onDrop(el, sibling, newStatus);
         })
     }
