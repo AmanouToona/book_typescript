@@ -41,7 +41,6 @@ const = person{name: 'name'} as const;
 ```bash
 npm init -y
 npm install --save-dev webpack@5.50.0 webpack-cli@4.7.2 typescript@4.3.5 ts-loader@9.2.5 serve@12.0.0
-export NODE_OPTIONS=--openssl-legacy-provider  # openssl の version が合わないから怒られるので対応
 ```
 
 [openssl の環境変数設定](https://zenn.dev/yogarasu/articles/425732ff408d06)
