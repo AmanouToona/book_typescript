@@ -18,11 +18,11 @@ class Application {
         const deleteAllDoneTaskButtom = document.getElementById('deleteAllDoneTask') as HTMLElement;
 
         taskItems.forEach(({ task, deleteButtonEl }) => {
-            this.eventListner.add(task.id, 'click', deleteButtonEl, () => this.handleClickDeleteTask(task))
+            this.eventListner.add('click', deleteButtonEl, () => this.handleClickDeleteTask(task), task.id)
         })
 
-        this.eventListner.add('submit-handler', 'submit', createForm, this.handleSubmit);
-        this.eventListner.add('cklick-handler', 'click', deleteAllDoneTaskButtom, this.handleClickDeleteAllDoneTask);
+        this.eventListner.add('submit', createForm, this.handleSubmit);
+        this.eventListner.add('click', deleteAllDoneTaskButtom, this.handleClickDeleteAllDoneTask);
         this.taskRender.subscribeDragAndDrop(this.handleDropAndDrop);
     }
 
@@ -37,7 +37,7 @@ class Application {
         this.taskCollection.add(task);
         const deleteButtonEl = this.taskRender.append(task);
 
-        this.eventListner.add(task.id, 'click', deleteButtonEl, () => this.handleClickDeleteTask(task));
+        this.eventListner.add('click', deleteButtonEl, () => this.handleClickDeleteTask(task), task.id);
 
         titleInput.value = '';
 
