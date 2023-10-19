@@ -50,3 +50,22 @@ npm install --save-dev webpack@5.50.0 webpack-cli@4.7.2 typescript@4.3.5 ts-load
 1. tsconfig.json の compilerOptions sourceMap を true にする。 webpack がソースマップを読めるようにするため
 2. package.json に build, serve, dev を追加する. 内容はコード参照
 3. その他、 tsconfig の設定は page 156 参照
+
+# 5 章
+
+## 環境構築
+
+```bash
+npm init -y
+npm install --save-dev webpack@5.50.0 webpack-cli@4.7.2 typescript@4.3.5 ts-loader@9.2.5 serve@12.0.0
+npm install -D serve@12.0.0
+npm install react@17.0.2 react-dom@17.0.2 styled-components@5.3.0
+npm install -D @types/react@17.0.17 @types/react-dom@17.0.9 @types/styled-components@5.1.12
+npx webpack init
+tsc --init
+```
+
+### tsconfig.json
+
+`outDir` `routDir` を記述  
+`jsx` に `react-jsx` を記述して react のシンタックスを解釈可能にする
