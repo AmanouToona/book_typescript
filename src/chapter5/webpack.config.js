@@ -4,18 +4,18 @@ const path = require("path");
 module.exports = {
   mode: process.env.NODE_ENV || "development",
   devtool: "inline-source-map",
-  entry: path.resolve(__dirname, "src/index.jsx"),
+  entry: path.resolve(__dirname, "src/index.tsx"),
   output: {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
   },
   resolve: {
-    extensions: [".ts", ".js", ".jsx"],
+    extensions: [".ts", ".js", ".jsx", ".tsx"],
   },
   module: {
     rules: [
       {
-        test: /\.(ts|jsx)/,
+        test: /\.(ts|jsx|tsx)/,
         use: {
           loader: "ts-loader",
         },
