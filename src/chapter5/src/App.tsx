@@ -2,6 +2,8 @@ import { Text } from "./libs/Text";
 import { Heading } from "./libs/Heading";
 import { Button } from "./libs/Button";
 import { TextArea } from "./libs/TextArea";
+import { Input } from "./libs/Input";
+import { PasswordForm } from "./libs/PasswordForm";
 
 export const App = () => {
   return (
@@ -27,7 +29,8 @@ export const App = () => {
         title="Button"
         type="error"
       />
-      <TextArea width={500} />
+      <TextArea maxLength={10} width={100} />
+      <Input type="text" />
     </>
   );
 };
