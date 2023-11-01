@@ -31,6 +31,7 @@ export const App = () => {
       />
       <TextArea maxLength={10} width={100} />
       <Input type="text" />
+      <PasswordForm onSubmit={(password) => console.log(password)} />
     </>
   );
 };

@@ -1,12 +1,5 @@
 import styled from "styled-components";
-import {
-  ChangeEvent,
-  VFC,
-  useState,
-  useCallback,
-  useEffect,
-  KeyboardEvent,
-} from "react";
+import { ChangeEvent, VFC, useState, useCallback, useEffect } from "react";
 import { space, fontSize } from "./constants/index";
 
 import { Button } from "./Button";
@@ -22,20 +15,14 @@ export const PasswordForm: VFC<Props> = ({ onSubmit }) => {
     setValue(event.currentTarget.value);
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Enter") {
-      onSubmit(value);
-    }
-  };
-
-  //   const handleKeyDown = useCallback(
-  //     (e: KeyboardEvent) => {
-  //       if (e.key === "Enter") {
-  //         onSubmit(value);
-  //       }
-  //     },
-  //     [value]
-  //   );
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        onSubmit(value);
+      }
+    },
+    [value]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
